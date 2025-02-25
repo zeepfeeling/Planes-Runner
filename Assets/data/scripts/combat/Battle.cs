@@ -25,27 +25,35 @@ namespace GamePlay.Combat
         Character self;
         float lastAttackTime = Mathf.Infinity;
         Movement.Move move;
+        Animator animator;
 
         void Start()
         {
             self = GetComponent<Character>();
             move = GetComponent<Movement.Move>();
+            animator = GetComponent<Animator>();
+            //左右手装备空拳
+            equip(defaultEquipment);
             equip(defaultEquipment);
         }
 
         void Update()
         {
-            //硬直，跳过该帧其他动作
+            //处于硬直状态时则跳过该帧其他动作
             if(self.inStaggerStatus()){
                 attackDone();
                 return;
             }
+            //上一轮攻击动画未结束则不处理
+            if(!animDone) return;
+            //攻击间隔，可由增加攻速缩短
             lastAttackTime += Time.deltaTime;
             if(atkTarget == null) return;
+            //目标死亡则不进行攻击
             if(atkTarget.isDead()) return;
-            if(!animDone) return;
+            //处于攻击范围外时，调用移动组件移动
             if (!inRange(true))
-                move.moveTo(atkTarget.transform.position);
+                move.setMoveDestination(atkTarget.transform.position);
             else
             {
                 move.stopAction();
@@ -63,7 +71,6 @@ namespace GamePlay.Combat
 
         public void equip(Equipment equipment)
         {
-            Animator animator = GetComponent<Animator>();
             //标识是否完成装备行为
             bool equiped = false;
             //存储装备到的槽位
@@ -93,38 +100,31 @@ namespace GamePlay.Combat
             }
         }
 
+        //处理攻击动画逻辑
         private void attackBehaviour()
         {
             transform.LookAt(atkTarget.transform);
             if(lastAttackTime !< attackInterval) return;
-            if(handRHasWeapon && !handLHasWeapon){//仅装备右手武器
-                if(weaponRType.Equals("melee"))
-                    GetComponent<Animator>().SetBool("attack_r",true);
-                else if(weaponRType.Equals("range"))
-                    GetComponent<Animator>().SetBool("shoot_r",true);
+            //状态机开启攻击开关
+            animator.SetBool("attack",true);
+            if (weaponRType.Equals("wave"))
+            {
+                animator.SetBool("wave", true);
+            }
+            else if (weaponRType.Equals("shoot"))
+            {
+                animator.SetBool("shoot", true);
+            }
+            else if (weaponRType.Equals("throw"))
+            {
+                animator.SetBool("throw", true);
+            }
+            if (handRHasWeapon && !handLHasWeapon){//仅装备右手武器
+                animator.SetBool("right",true);
             } else if(!handRHasWeapon && handLHasWeapon){//仅装备左手武器
-                if(weaponLType.Equals("melee"))
-                    GetComponent<Animator>().SetBool("attack_l",true);
-                else if(weaponLType.Equals("range"))
-                    GetComponent<Animator>().SetBool("shoot_l",true);
+                animator.SetBool("left",true);
             } else if(handRHasWeapon && handLHasWeapon){//双手都有装备
-                if(weaponLType.Equals(weaponRType)){//双手武器类型相同时
-                    if(weaponRType.Equals("melee")){
-                        GetComponent<Animator>().SetBool("attack_r",true);
-                        GetComponent<Animator>().SetBool("melee_dual",true);
-                    }else if(weaponRType.Equals("range")){
-                        GetComponent<Animator>().SetBool("shoot_r",true);
-                        GetComponent<Animator>().SetBool("shoot_dual",true);
-                    }
-                }else{
-                    if(weaponRType.Equals("melee")){//双手武器类型不同时，根据距离目标远近决定播放哪个手的动画
-                        if(inRange(false)) GetComponent<Animator>().SetBool("attack_r",true);
-                        else GetComponent<Animator>().SetBool("shoot_l",true);
-                    }else if(weaponRType.Equals("range")){
-                        if(inRange(false)) GetComponent<Animator>().SetBool("attack_l",true);
-                        else GetComponent<Animator>().SetBool("shoot_r",true);
-                    }
-                }
+                animator.SetBool("bothhands",true);
             }
             lastAttackTime = 0;
         }
@@ -154,22 +154,18 @@ namespace GamePlay.Combat
         private bool inRange(bool needMaxRange)
         {
             float battleRange = 0;
-            List<Equipment> equipmentsActived = self.getEquipmentsActived();
-            foreach(Equipment equipmentActived in equipmentsActived)
-            {   
-                if(needMaxRange)
-                    battleRange = Mathf.Max(equipmentActived.getRange(),battleRange);
-                else{
-                    if(battleRange == 0) battleRange = equipmentActived.getRange();
-                    else battleRange = Mathf.Min(equipmentActived.getRange(),battleRange);
-                }
-            }
+            if (needMaxRange)
+                battleRange = self.getMaxBattleRange();
+            else
+                battleRange = self.getMinBattleRange();
             return Vector3.Distance(transform.position, atkTarget.transform.position) < battleRange;
         }
 
-        public void attack(GameObject combatTarget)
+        //设定攻击对象
+        public void setAttackTarget(GameObject combatTarget)
         {
             GetComponent<Core.ActionScheduler>().startAction(this);
+            animator.SetBool("combatState",true);
             atkTarget = combatTarget.GetComponent<Core.Character>();
         }
 
@@ -183,12 +179,13 @@ namespace GamePlay.Combat
         }
 
         public void stopAction(){
-            GetComponent<Animator>().SetBool("attack_r",false);
-            GetComponent<Animator>().SetBool("attack_l",false);
-            GetComponent<Animator>().SetBool("shoot_r",false);
-            GetComponent<Animator>().SetBool("shoot_l",false);
-            GetComponent<Animator>().SetBool("melee_dual",false);
-            GetComponent<Animator>().SetBool("shoot_dual",false);
+            GetComponent<Animator>().SetBool("attack",false);
+            GetComponent<Animator>().SetBool("right",false);
+            GetComponent<Animator>().SetBool("left",false);
+            GetComponent<Animator>().SetBool("bothhands",false);
+            GetComponent<Animator>().SetBool("wave",false);
+            GetComponent<Animator>().SetBool("shoot",false);
+            GetComponent<Animator>().SetBool("throw",false);
             animDone = true;
             atkTarget = null;
         }

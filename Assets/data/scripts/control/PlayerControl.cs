@@ -17,7 +17,7 @@ namespace GamePlay.Control
 
         private void Start()
         {
-            //initiate components player will use
+            //组件初始化
             charactor = GetComponent<Character>();
             battle = GetComponent<Battle>();
             cast = GetComponent<Cast>();
@@ -29,7 +29,7 @@ namespace GamePlay.Control
             if (charactor.isDead()) return;
             //every frame should do
             //if (interactWithSpell()) return;
-            //if (interactWithCombat()) return;
+            if (interactWithCombat()) return;
             //if (interactWithPickUp()) return;
             if (interactWithMovement()) return;
         }
@@ -50,11 +50,11 @@ namespace GamePlay.Control
             {
                 HitTarget target = hit.transform.GetComponent<HitTarget>();
                 if (target == null) continue;
-                //dead guy should be ignored
-                if (charactor.isDead()) continue;
-                //you cannot beat yourself
-                if (hit.transform.tag == "Player") continue;
-                battle.attack(target.gameObject);
+                //点击玩家或者非敌对单位则跳过
+                if (hit.transform.tag == "Player" || hit.transform.tag != "Hostile") continue;
+                Debug.Log("目标已选择。");
+                //调用战斗组件的攻击逻辑方法
+                battle.setAttackTarget(target.gameObject);
                 return true;
             }
             return false;
@@ -125,7 +125,7 @@ namespace GamePlay.Control
             {
                 return false;
             }
-            move.moveTo(rayhit.point);
+            move.setMoveDestination(rayhit.point);
             return true;
         }
 

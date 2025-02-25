@@ -17,7 +17,7 @@ namespace GamePlay.Combat
         //装备武器在对应位置显示
         public void equipWeaponShowOnPosition(Transform spawnPosition, Animator animator)
         {
-            if (equipPrefab != null){
+            if (equipPrefab != null && spawnPosition != null){
                 GameObject equipment = Instantiate(equipPrefab, spawnPosition);
                 equipment.name = equipmentName;
             }

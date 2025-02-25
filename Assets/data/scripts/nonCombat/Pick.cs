@@ -17,7 +17,7 @@ namespace GamePlay.NonCombat
         private void Update()
         {
             if (target == null) return;
-            if (!inRange()) move.moveTo(target.transform.position);
+            if (!inRange()) move.setMoveDestination(target.transform.position);
             else
             {
                 move.stopAction();

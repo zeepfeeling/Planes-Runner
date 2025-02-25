@@ -28,7 +28,7 @@ namespace GamePlay.Movement
             updateAnimator();
         }
 
-        public void moveTo(Vector3 destination)
+        public void setMoveDestination(Vector3 destination)
         {
             GetComponent<Core.ActionScheduler>().startAction(this);
             navMeshAgent.destination = destination;

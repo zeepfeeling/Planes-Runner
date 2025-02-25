@@ -37,7 +37,7 @@ namespace GamePlay.Control
             if (distance <= chaseDistance && !player.GetComponent<Core.Character>().isDead())
             {
                 //检测进入战斗
-                battle.attack(player);
+                battle.setAttackTarget(player);
                 timeAfterEncount = 0;
             }
             else if (timeAfterEncount < suspicionTime)
@@ -57,7 +57,7 @@ namespace GamePlay.Control
                     aiPosition = getCurrentWayPoint();
                 }
                 if(timeAfterPatrol >= wayPointstayTime){
-                    move.moveTo(aiPosition);
+                    move.setMoveDestination(aiPosition);
                     timeAfterPatrol = 0;
                 }
             }

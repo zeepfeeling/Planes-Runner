@@ -10,7 +10,7 @@ namespace GamePlay.Core
         void LateUpdate()
         {
             transform.position = target.position;
-            transform.position = new Vector3(target.position.x - 6, target.position.y + 12, target.position.z - 6);
+            transform.position = new Vector3(target.position.x - 6, target.position.y + 8, target.position.z - 6);
         }
     }
 

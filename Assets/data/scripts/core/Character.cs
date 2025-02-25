@@ -29,6 +29,8 @@ namespace GamePlay.Core
         Dictionary<String,float> equipValues = new Dictionary<string, float>(); //装备数值目录
         String[] activeSlots = new String[2]; //被激活的装备槽位
         List<String> frozenSlots = new List<string>(); //被冻结的装备槽位
+        float maxBattleRnage = 0f; //最大交战距离
+        float minBattleRnage = 0f; //最小交战距离
 
         void Awake()
         {
@@ -184,14 +186,14 @@ namespace GamePlay.Core
                 return;
             }
             staggersPoint += 1f;
-            if(staggersPoint >= maxStaggersPoint){
-                GetComponent<Animator>().SetTrigger("getHit");
+            if(staggersPoint >= maxStaggersPoint && GetComponent<Animator>() != null){
+                GetComponent<Animator>().SetBool("getHit",true);
                 staggerStatus = true;
             }
         }
 
         public void resetStaggers(){
-            GetComponent<Animator>().ResetTrigger("getHit");
+            GetComponent<Animator>().SetBool("getHit",false);
             staggerStatus = false;
             staggersPoint = 0;
         }
@@ -242,11 +244,20 @@ namespace GamePlay.Core
             inActiveEquipment(slot);
         }
 
+        public float getMaxBattleRange(){
+            return maxBattleRnage;
+        }
+        public float getMinBattleRange(){
+            return minBattleRnage;
+        }
+
         private void activeEquipment(String slot){
             if(slot.Equals("weapon1") || slot.Equals("weapon3"))
                 activeSlots[0] = slot;
             else if(slot.Equals("weapon2") || slot.Equals("weapon4"))
                 activeSlots[1] = slot;
+            //重新计算人物最大和最小交战距离
+            countBattleRange();
         }
 
         private void inActiveEquipment(String slot){
@@ -258,8 +269,18 @@ namespace GamePlay.Core
         {
             if (dead) return;
             dead = true;
-            GetComponent<Animator>().SetTrigger("die");
+            GetComponent<Animator>().SetBool("die",true);
             GetComponent<ActionScheduler>().stopCurrentAction();
+        }
+
+        //计算人物最大和最小交战距离
+        private void countBattleRange(){
+            List<Equipment> equipmentsActived = getEquipmentsActived();
+            foreach(Equipment equipmentActived in equipmentsActived)
+            {   
+                    maxBattleRnage = Mathf.Max(equipmentActived.getRange(),maxBattleRnage);
+                    minBattleRnage = Mathf.Min(equipmentActived.getRange(),minBattleRnage);
+            }
         }
     }
 }

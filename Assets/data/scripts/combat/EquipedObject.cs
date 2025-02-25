@@ -8,7 +8,7 @@ namespace GamePlay.Combat
     public class EquipedObject : MonoBehaviour
     {
         public Equipment equipment; //装备数据
-        float physicDamage = 5; //物理伤害值，取自装备模板，会根据属性、技能、装备浮动计算;空手默认为5
+        float physicDamage = 0; //物理伤害值，取自装备模板，会根据属性、技能、装备浮动计算;空手默认为5
 
         void Update()
         {
@@ -19,7 +19,7 @@ namespace GamePlay.Combat
 
         private void OnTriggerEnter(Collider other)
         {
-            if(other.gameObject.layer != 3) return;
+            if(other.gameObject.tag != "Hostile") return;
             //do damage
             Character target = other.transform.GetComponent<Character>();
             target.takeDamage(physicDamage);
