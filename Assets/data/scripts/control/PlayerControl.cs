@@ -30,7 +30,7 @@ namespace GamePlay.Control
             //every frame should do
             //if (interactWithSpell()) return;
             if (interactWithCombat()) return;
-            //if (interactWithPickUp()) return;
+            if (interactWithPickUp()) return;
             if (interactWithMovement()) return;
         }
 

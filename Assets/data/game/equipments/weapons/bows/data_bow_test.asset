@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7ce80e5562c733468f44b0b2f579b55, type: 3}
-  m_Name: data_unarmed
+  m_Name: data_bow_test
   m_EditorClassIdentifier: 
-  equipPrefab: {fileID: 6747350202873023215, guid: 174b4d3b151fad74b80a7410b48ed23e,
+  equipPrefab: {fileID: 6747350202873023215, guid: 5ec8a733756cfd7458b6ac9d3cd1414e,
     type: 3}
-  equipmentName: unarmed
-  equipmentType: punch
+  equipmentName: "\u6D4B\u8BD5\u5F13"
+  equipmentType: bow
   equipAnimatorOverrideController: {fileID: 0}
   physicDamage: 1
-  battleRange: 1
-  ammo: {fileID: 0}
+  battleRange: 20
+  ammo: {fileID: 6930275558595596520, guid: 9c64b67d083b5bd4ca5e7344a19f5835, type: 3}

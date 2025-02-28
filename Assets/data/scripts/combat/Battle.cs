@@ -17,6 +17,8 @@ namespace GamePlay.Combat
         String weaponRType = null;
         bool handLHasWeapon = false;
         String weaponLType = null;
+        GameObject weaponR = null;
+        GameObject weaponL = null;
         
         //判断攻击动画是否完成播放
         bool animDone = true;
@@ -32,7 +34,9 @@ namespace GamePlay.Combat
             self = GetComponent<Character>();
             move = GetComponent<Movement.Move>();
             animator = GetComponent<Animator>();
-            //左右手装备空拳
+            //所有装备槽装备空拳
+            equip(defaultEquipment);
+            equip(defaultEquipment);
             equip(defaultEquipment);
             equip(defaultEquipment);
         }
@@ -73,12 +77,19 @@ namespace GamePlay.Combat
         {
             //标识是否完成装备行为
             bool equiped = false;
+            //获取装备类型
+            String weaponType = equipment.getEquipmentType();
             //存储装备到的槽位
             String slotName = null;
             //检查装备位是否有空缺
             for(int i = 1; i <= 4; i++){
                 Equipment weapon = self.getEquipmentBySlot("weapon" + i);
-                if(weapon == null || weapon.getEquipmentName().Equals("unArmed")){
+                //判断槽位是否空手
+                if(weapon == null || weapon.getEquipmentName().Equals(defaultEquipment.getEquipmentName())){
+                    //弓类型必须装在左手槽位
+                    if(weaponType == "bow" && i != 2 && i !=4){
+                        continue;
+                    }
                     self.setEquipmentBySlot("weapon" + i, equipment);
                     slotName = "weapon" + i;
                     equiped = true;
@@ -86,18 +97,28 @@ namespace GamePlay.Combat
                 }
             }
             //没有空缺的情况下替换第一个装备
-            if(!equiped) self.setEquipmentBySlot("weapon1", equipment);
+            if(!equiped){
+                if(weaponType == "bow") self.setEquipmentBySlot("weapon2", equipment);
+                else self.setEquipmentBySlot("weapon1", equipment);
+            } 
             //根据激活槽位选择装备模型生成位置
             if(slotName.Equals("weapon1") || slotName.Equals("weapon3")){
-                handRHasWeapon = true;
-                weaponRType = equipment.getEquipmentType();
+                //判断是否不是空拳,空拳状态不标记为有装备
+                if(!equipment.getEquipmentName().Equals(defaultEquipment.getEquipmentName())){
+                    handRHasWeapon = true;
+                    weaponRType = weaponType;
+                }
                 equipment.equipWeaponShowOnPosition(handTransfrom, animator);
             }
             else if (slotName.Equals("weapon2") || slotName.Equals("weapon4")){
-                handLHasWeapon = true;
-                weaponLType = equipment.getEquipmentType();
+                //判断是否不是空拳,空拳状态不标记为有装备
+                if(!equipment.getEquipmentName().Equals(defaultEquipment.getEquipmentName())){
+                    handLHasWeapon = true;
+                    weaponLType = weaponType;
+                }
                 equipment.equipWeaponShowOnPosition(handTransfromL, animator);
             }
+            getEquipObj();
         }
 
         //处理攻击动画逻辑
@@ -107,24 +128,59 @@ namespace GamePlay.Combat
             if(lastAttackTime !< attackInterval) return;
             //状态机开启攻击开关
             animator.SetBool("attack",true);
-            if (weaponRType.Equals("wave"))
-            {
-                animator.SetBool("wave", true);
+            if(!handRHasWeapon && !handLHasWeapon){//赤手空拳播放拳击动画
+                animator.SetBool("punch", true);
             }
-            else if (weaponRType.Equals("shoot"))
-            {
-                animator.SetBool("shoot", true);
-            }
-            else if (weaponRType.Equals("throw"))
-            {
-                animator.SetBool("throw", true);
-            }
-            if (handRHasWeapon && !handLHasWeapon){//仅装备右手武器
+            if(handRHasWeapon && !handLHasWeapon) {//仅装备右手武器
                 animator.SetBool("right",true);
+                if (weaponRType.Equals("onehanded"))
+                {
+                    animator.SetBool("wave", true);
+                }
+                else if (weaponRType.Equals("onehandedCrossBow"))
+                {
+                    animator.SetBool("shoot", true);
+                }
+                else if (weaponRType.Equals("ammo"))
+                {
+                    animator.SetBool("throw", true);
+                }
             } else if(!handRHasWeapon && handLHasWeapon){//仅装备左手武器
                 animator.SetBool("left",true);
+                if (weaponLType.Equals("onehanded"))
+                {
+                    animator.SetBool("wave", true);
+                }
+                else if (weaponLType.Equals("onehandedCrossBow"))
+                {
+                    animator.SetBool("shoot", true);
+                }
+                else if (weaponLType.Equals("ammo"))
+                {
+                    animator.SetBool("throw", true);
+                }
+                else if (weaponLType.Equals("bow"))
+                {
+                    animator.SetBool("bow", true);
+                }
             } else if(handRHasWeapon && handLHasWeapon){//双手都有装备
                 animator.SetBool("bothhands",true);
+                if(weaponRType == weaponLType){//双手武装类型相同时，播放特殊双持攻击动画
+                    if (weaponRType.Equals("onehanded"))
+                    {
+                        animator.SetBool("wave", true);
+                    }
+                    else if (weaponLType.Equals("onehandedCrossBow"))
+                    {
+                        animator.SetBool("shoot", true);
+                    }
+                    else if (weaponLType.Equals("ammo"))
+                    {
+                        animator.SetBool("throw", true);
+                    }
+                }else{//双手武装类型不同时，根据和目标距离切换合适范围的武器动画
+
+                }
             }
             lastAttackTime = 0;
         }
@@ -173,12 +229,40 @@ namespace GamePlay.Combat
             animDone = false;
         }
 
+        public void activeWeaponR(){
+            if(weaponR != null && weaponR.GetComponent<Collider> ()!= null) {
+                Collider weaponRColloder = weaponR.GetComponent<Collider>();
+                weaponRColloder.enabled = true;
+            }
+        }
+
+        public void activeWeaponL(){
+            if(weaponL != null && weaponR.GetComponent<Collider> ()!= null) {
+                Collider weaponLColloder = weaponR.GetComponent<Collider>();
+                weaponLColloder.enabled = true;
+            }
+        }
+        public void inActiveWeaponR(){
+            if(weaponR != null && weaponR.GetComponent<Collider> ()!= null) {
+                Collider weaponRColloder = weaponR.GetComponent<Collider>();
+                weaponRColloder.enabled = false;
+            }
+        }
+
+        public void inActiveWeaponL(){
+            if(weaponL != null && weaponR.GetComponent<Collider> ()!= null) {
+                Collider weaponLColloder = weaponR.GetComponent<Collider>();
+                weaponLColloder.enabled = false;
+            }
+        }
+
         public void attackDone()
         {
             stopAction();
         }
 
         public void stopAction(){
+            //状态机取消动作
             GetComponent<Animator>().SetBool("attack",false);
             GetComponent<Animator>().SetBool("right",false);
             GetComponent<Animator>().SetBool("left",false);
@@ -186,8 +270,26 @@ namespace GamePlay.Combat
             GetComponent<Animator>().SetBool("wave",false);
             GetComponent<Animator>().SetBool("shoot",false);
             GetComponent<Animator>().SetBool("throw",false);
+            GetComponent<Animator>().SetBool("punch",false);
+            //碰撞取消
+            inActiveWeaponR();
+            inActiveWeaponL();
             animDone = true;
             atkTarget = null;
+        }
+
+        public void getEquipObj(){
+            try
+            {
+                weaponR = handTransfrom.GetChild(0).gameObject;
+                weaponL = handTransfromL.GetChild(0).gameObject;
+            }
+            catch (Exception)
+            {
+                Debug.Log("双手武器位获取为空");
+                return;
+            }
+
         }
     }
 }
