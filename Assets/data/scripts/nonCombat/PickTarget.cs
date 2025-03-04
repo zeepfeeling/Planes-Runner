@@ -9,7 +9,7 @@ namespace GamePlay.NonCombat
         public bool castable = false;
         public bool pickable = true;
         public Core.Item item = null;
-        public int itemCount = 1;
+        public int singleItemCount = 1;
         public GameObject nameBar = null;
         GameObject nameBarInstance;
 
@@ -22,7 +22,7 @@ namespace GamePlay.NonCombat
                 if(canvas == null) return;
                 nameBarInstance = Instantiate(nameBar,canvas.transform);
                 Text itmeName = nameBarInstance.GetComponentInChildren<Text>();
-                itmeName.text = item.name;
+                itmeName.text = item.itemName;
             }
         }
 

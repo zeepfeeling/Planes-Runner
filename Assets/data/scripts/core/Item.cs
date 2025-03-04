@@ -1,14 +1,15 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace GamePlay.Core
 {
-    public class Item : MonoBehaviour
+    [CreateAssetMenu(fileName = "Item", menuName = "GamePlay/Item", order = 0)]
+    public class Item : ScriptableObject
     {
-        public int id;
-        public String name {get;set;}
+        public String itemName;
+        public Image icon;
 
-        public bool isCoin = false;
         // Start is called before the first frame update
         void Start()
         {

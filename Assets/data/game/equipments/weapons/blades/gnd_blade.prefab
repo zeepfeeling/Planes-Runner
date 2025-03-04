@@ -49,8 +49,8 @@ MonoBehaviour:
   equipable: 1
   castable: 0
   pickable: 1
-  equipment: {fileID: 11400000, guid: 957c048fde8a7e14db2391afcab6c8f1, type: 2}
-  spell: {fileID: 0}
+  item: {fileID: 11400000, guid: 957c048fde8a7e14db2391afcab6c8f1, type: 2}
+  singleItemCount: 1
   nameBar: {fileID: 297570283279070601, guid: 2c51ceb1b4f610f4c93e1f613ec228dd, type: 3}
   pickRange: 1
 --- !u!65 &1152262611612100972

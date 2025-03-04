@@ -70,7 +70,9 @@
     <Compile Include="Assets\data\scripts\nonCombat\Pick.cs" />
     <Compile Include="Assets\data\scripts\nonCombat\PickTarget.cs" />
     <Compile Include="Assets\data\scripts\core\ActionScheduler.cs" />
+    <Compile Include="Assets\data\scripts\core\Coin.cs" />
     <Compile Include="Assets\data\scripts\combat\Ammo.cs" />
+    <Compile Include="Assets\data\scripts\core\InventorySlot.cs" />
     <Compile Include="Assets\data\scripts\core\Backpack.cs" />
     <Compile Include="Assets\data\scripts\control\AIControl.cs" />
     <Compile Include="Assets\data\scripts\control\PlayerControl.cs" />

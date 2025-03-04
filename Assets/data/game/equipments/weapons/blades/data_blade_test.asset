@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7ce80e5562c733468f44b0b2f579b55, type: 3}
   m_Name: data_blade_test
   m_EditorClassIdentifier: 
+  itemName: "\u6D4B\u8BD5\u5251"
   equipPrefab: {fileID: 6747350202873023215, guid: fb6b3235011b10b41a1f3b9eb8f8e583,
     type: 3}
-  equipmentName: "\u6D4B\u8BD5\u5251"
   equipmentType: onehanded
   equipAnimatorOverrideController: {fileID: 0}
   physicDamage: 1

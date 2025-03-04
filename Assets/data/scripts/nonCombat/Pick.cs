@@ -8,10 +8,12 @@ namespace GamePlay.NonCombat
         PickTarget target;
         Movement.Move move;
         Battle battle;
+        Inventory inventory;
 
         private void Start() {
             move = GetComponent<Movement.Move>();
             battle = GetComponent<Battle>();
+            inventory = GetComponent<Inventory>();
         }
 
         private void Update()
@@ -22,15 +24,10 @@ namespace GamePlay.NonCombat
             {
                 move.stopAction();
                 if (!target.isPickable()) return;
-                // if (target.isEquipable())
-                // {
-                //     goEquip();
-                //     return;
-                // }
-                // if (target.isCastable() && target.GetSpell() != null){
-                    
-                // }
-
+                if(target.item != null){
+                    inventory.addItemsToInventory(target.item,target.singleItemCount);
+                    target.vanish();
+                }
             }
         }
 

@@ -3,11 +3,10 @@ using UnityEngine;
 
 namespace GamePlay.Core
 {
-    [CreateAssetMenu(fileName = "Equipment", menuName = "GamePlay/Equipment", order = 0)]
-    public class Equipment : ScriptableObject
+    [CreateAssetMenu(fileName = "Equipment", menuName = "GamePlay/Equipment", order = 3)]
+    public class Equipment : Item
     {
         public GameObject equipPrefab = null;
-        public String equipmentName = "";
         public String equipmentType = "";
         public AnimatorOverrideController equipAnimatorOverrideController = null;
         public float physicDamage = 5f;
@@ -19,7 +18,6 @@ namespace GamePlay.Core
         {
             if (equipPrefab != null && spawnPosition != null){
                 GameObject equipment = Instantiate(equipPrefab, spawnPosition);
-                equipment.name = equipmentName;
             }
             // set animator
             if (equipAnimatorOverrideController != null)
@@ -31,7 +29,7 @@ namespace GamePlay.Core
 
         //装备武器在对应位置消失
         public void equipWeaponDisappearOnPosition(Transform destoryPosition, Animator animator){
-            Transform equipment = destoryPosition.Find(equipmentName);
+            Transform equipment = destoryPosition.Find(itemName);
             if(equipment == null) return;
             equipment.name = equipment.name + "_delete";
             Debug.Log(equipment.name);
@@ -70,7 +68,7 @@ namespace GamePlay.Core
         }
         
         public String getEquipmentName(){
-            return equipmentName;
+            return itemName;
         }
     }
 
