@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GamePlay.Combat
+namespace GamePlay.Core
 {
     [RequireComponent(typeof(Core.Character))]
     public class HitTarget : MonoBehaviour

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-namespace GamePlay.Combat
+namespace GamePlay.Core
 {
 
     public class Effect : MonoBehaviour

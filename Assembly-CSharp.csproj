@@ -64,7 +64,7 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.51f1c1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\data\scripts\combat\Equipment.cs" />
+    <Compile Include="Assets\data\scripts\core\Inventory.cs" />
     <Compile Include="Assets\data\scripts\combat\Cast.cs" />
     <Compile Include="Assets\data\scripts\combat\Battle.cs" />
     <Compile Include="Assets\data\scripts\nonCombat\Pick.cs" />
@@ -74,11 +74,13 @@
     <Compile Include="Assets\data\scripts\core\Backpack.cs" />
     <Compile Include="Assets\data\scripts\control\AIControl.cs" />
     <Compile Include="Assets\data\scripts\control\PlayerControl.cs" />
+    <Compile Include="Assets\data\scripts\core\Equipment.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\data\scripts\core\Character.cs" />
     <Compile Include="Assets\data\scripts\interface\PointBar.cs" />
     <Compile Include="Assets\data\scripts\combat\HitTarget.cs" />
     <Compile Include="Assets\data\scripts\combat\Effect.cs" />
+    <Compile Include="Assets\data\scripts\core\Item.cs" />
     <Compile Include="Assets\data\scripts\combat\Buff.cs" />
     <Compile Include="Assets\data\scripts\movement\Move.cs" />
     <Compile Include="Assets\data\scripts\control\PatrolPath.cs" />

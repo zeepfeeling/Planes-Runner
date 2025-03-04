@@ -8,8 +8,8 @@ namespace GamePlay.NonCombat
         public bool equipable = true;
         public bool castable = false;
         public bool pickable = true;
-        public Combat.Equipment equipment = null;
-        public Combat.Spell spell = null;
+        public Core.Item item = null;
+        public int itemCount = 1;
         public GameObject nameBar = null;
         GameObject nameBarInstance;
 
@@ -17,12 +17,12 @@ namespace GamePlay.NonCombat
 
         void Start()
         {
-            if(equipment != null && nameBar != null){
+            if(item != null && nameBar != null){
                 GameObject canvas = GameObject.Find("Canvas");
                 if(canvas == null) return;
                 nameBarInstance = Instantiate(nameBar,canvas.transform);
                 Text itmeName = nameBarInstance.GetComponentInChildren<Text>();
-                itmeName.text = equipment.getEquipmentName();
+                itmeName.text = item.name;
             }
         }
 
@@ -51,12 +51,8 @@ namespace GamePlay.NonCombat
             return pickable;
         }
 
-        public Combat.Equipment GetEquipment(){
-            return equipment;
-        }
-
-        public Combat.Spell GetSpell(){
-            return spell;
+        public Core.Item getItem(){
+            return item;
         }
 
         public float getPickRange(){

@@ -3,7 +3,7 @@ using GamePlay.Core;
 using TMPro;
 using UnityEngine;
 
-namespace GamePlay.Combat
+namespace GamePlay.Core
 {
 
     public class Cast : MonoBehaviour, IAction

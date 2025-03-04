@@ -3,7 +3,7 @@ using GamePlay.Core;
 using Unity.VisualScripting;
 using UnityEngine;
 
-namespace GamePlay.Combat
+namespace GamePlay.Core
 {
     public class EquipedObject : MonoBehaviour
     {

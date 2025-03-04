@@ -3,7 +3,7 @@ using GamePlay.Core;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace GamePlay.Combat
+namespace GamePlay.Core
 {
     [CreateAssetMenu(fileName = "Spell", menuName = "GamePlay/Spell", order = 1)]
     public class Spell : ScriptableObject

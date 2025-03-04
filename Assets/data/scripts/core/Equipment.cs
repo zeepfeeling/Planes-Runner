@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace GamePlay.Combat
+namespace GamePlay.Core
 {
     [CreateAssetMenu(fileName = "Equipment", menuName = "GamePlay/Equipment", order = 0)]
     public class Equipment : ScriptableObject

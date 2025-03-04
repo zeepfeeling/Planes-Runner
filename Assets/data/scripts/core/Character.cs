@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using GamePlay.Combat;
+using GamePlay.Core;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;

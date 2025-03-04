@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using GamePlay.Combat;
+using GamePlay.Core;
 using UnityEngine;
 
 public class Backpack : MonoBehaviour

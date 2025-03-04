@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using GamePlay.Core;
 using UnityEngine;
 
-namespace GamePlay.Combat
+namespace GamePlay.Core
 {
 
     public class Battle : MonoBehaviour, Core.IAction

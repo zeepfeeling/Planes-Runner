@@ -1,4 +1,4 @@
-using GamePlay.Combat;
+using GamePlay.Core;
 using UnityEngine;
 
 namespace GamePlay.NonCombat
@@ -22,24 +22,21 @@ namespace GamePlay.NonCombat
             {
                 move.stopAction();
                 if (!target.isPickable()) return;
-                if (target.isEquipable())
-                {
-                    goEquip();
-                    return;
-                }
-                if (target.isCastable() && target.GetSpell() != null){
+                // if (target.isEquipable())
+                // {
+                //     goEquip();
+                //     return;
+                // }
+                // if (target.isCastable() && target.GetSpell() != null){
                     
-                }
+                // }
+
             }
         }
 
         private void goEquip()
         {
-            Equipment equipment = target.GetEquipment();
-            if (equipment == null) return;
-            //equip
-            battle.equip(equipment);
-            target.vanish();
+
         }
 
         public void pick(PickTarget pickTarget)

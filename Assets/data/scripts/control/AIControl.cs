@@ -12,7 +12,7 @@ namespace GamePlay.Control
         public float wayPointstayTime = 3f;
 
 
-        Combat.Battle battle;
+        Core.Battle battle;
         GameObject player;
         Core.Character health;
         Movement.Move move;
@@ -24,7 +24,7 @@ namespace GamePlay.Control
         private void Start()
         {
             health = GetComponent<Core.Character>();
-            battle = GetComponent<Combat.Battle>();
+            battle = GetComponent<Core.Battle>();
             move = GetComponent<Movement.Move>();
             player = GameObject.FindWithTag("Player");
             aiPosition = transform.position;
