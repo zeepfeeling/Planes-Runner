@@ -90,6 +90,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7358863813277052757, guid: fbdd4add25ef750409b98f8508e13c8e,
         type: 3}
+      propertyPath: slotIconSample
+      value: 
+      objectReference: {fileID: 1690977539167700723, guid: 74a1071230c83fd4bb092b05be54fb66,
+        type: 3}
+    - target: {fileID: 7358863813277052757, guid: fbdd4add25ef750409b98f8508e13c8e,
+        type: 3}
       propertyPath: inventoryInterface
       value: 
       objectReference: {fileID: 0}

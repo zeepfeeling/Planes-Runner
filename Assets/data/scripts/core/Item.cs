@@ -8,7 +8,7 @@ namespace GamePlay.Core
     public class Item : ScriptableObject
     {
         public String itemName;
-        public Image icon;
+        public Sprite icon;
 
         // Start is called before the first frame update
         void Start()

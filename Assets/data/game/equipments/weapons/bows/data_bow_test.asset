@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: data_bow_test
   m_EditorClassIdentifier: 
   itemName: "\u6D4B\u8BD5\u5F13"
+  icon: {fileID: 21300000, guid: 03618a5f9113cc349af3faa4257bfde0, type: 3}
   equipPrefab: {fileID: 6747350202873023215, guid: 5ec8a733756cfd7458b6ac9d3cd1414e,
     type: 3}
   equipmentType: bow

@@ -10,20 +10,26 @@ namespace GamePlay.Core
     public class Inventory : MonoBehaviour
     {
         public GameObject inventoryInterface;
+        public GameObject slotIconSample;
         int coins = 0;
         int slotCopunt = 40;
         Dictionary<int, InventorySlot> inventorySlots = new Dictionary<int, InventorySlot>();
         Transform inventorySlotInterface;
         bool needUpdateInv = false;
 
+        //初始化背包格子以及对应数据结构
         void Awake()
         {
-            //初始化背包格子
-            for(int index = 0; index < 40; index ++){
-                inventorySlots.Add(index, null);
-            }
             if(inventoryInterface != null){
                 inventorySlotInterface = inventoryInterface.transform.Find("items/Slots");
+                for(int index = 0; index < 40; index ++){
+                    GameObject slotIcon = Instantiate(slotIconSample);
+                    slotIcon.name = slotIconSample.name + index; // 可选：更改复制对象的名称
+                    slotIcon.transform.SetParent(inventorySlotInterface, false);
+                }
+            }
+            for(int index = 0; index < 40; index ++){
+                inventorySlots.Add(index, null);
             }
         }
 
@@ -76,7 +82,7 @@ namespace GamePlay.Core
                 {
                     Item item = kvp.Value.getItem();
                     if(item.icon != null)
-                        slotIcon.sprite = item.icon.sprite;
+                        slotIcon.sprite = item.icon;
                     itemCount.text = kvp.Value.getItemCount().ToString();
                 } else {
                     itemCount.text = "0";
