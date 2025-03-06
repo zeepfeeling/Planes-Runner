@@ -2,13 +2,14 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace GamePlay.Core
+namespace GamePlay.Interface
 {
     [CreateAssetMenu(fileName = "Item", menuName = "GamePlay/Item", order = 0)]
     public class Item : ScriptableObject
     {
         public String itemName;
         public Sprite icon;
+        public GameObject gnd;
 
         // Start is called before the first frame update
         void Start()

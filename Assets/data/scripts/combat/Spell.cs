@@ -1,9 +1,9 @@
 using System;
-using GamePlay.Core;
+using GamePlay.Interface;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace GamePlay.Core
+namespace GamePlay.Interface
 {
     [CreateAssetMenu(fileName = "Spell", menuName = "GamePlay/Spell", order = 1)]
     public class Spell : ScriptableObject

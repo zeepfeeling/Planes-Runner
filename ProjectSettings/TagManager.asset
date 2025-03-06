@@ -5,11 +5,13 @@ TagManager:
   serializedVersion: 2
   tags:
   - Hostile
+  - item_slot
+  - item_relative_ui
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - float UI
   - Water
   - UI
   - 

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GamePlay.Core
+namespace GamePlay.Interface
 {
     public class FollowCamera : MonoBehaviour
     {

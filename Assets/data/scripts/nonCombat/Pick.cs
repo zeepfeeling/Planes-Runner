@@ -1,9 +1,9 @@
-using GamePlay.Core;
+using GamePlay.Interface;
 using UnityEngine;
 
 namespace GamePlay.NonCombat
 {
-    public class Pick : MonoBehaviour, Core.IAction
+    public class Pick : MonoBehaviour, Interface.IAction
     {
         PickTarget target;
         Movement.Move move;
@@ -38,7 +38,7 @@ namespace GamePlay.NonCombat
 
         public void pick(PickTarget pickTarget)
         {
-            GetComponent<Core.ActionScheduler>().startAction(this);
+            GetComponent<Interface.ActionScheduler>().startAction(this);
             target = pickTarget;          
         }
         public void stopAction()

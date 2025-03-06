@@ -1,7 +1,9 @@
-using GamePlay.Core;
+using System.Collections.Generic;
+using GamePlay.Interface;
 using GamePlay.Movement;
 using GamePlay.NonCombat;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace GamePlay.Control
 {
@@ -28,9 +30,31 @@ namespace GamePlay.Control
             if (charactor.isDead()) return;
             //every frame should do
             //if (interactWithSpell()) return;
+            if (interactWithUI()) return;
             if (interactWithCombat()) return;
             if (interactWithPickUp()) return;
             if (interactWithMovement()) return;
+        }
+
+        private bool interactWithUI(){
+            if (Input.GetMouseButton(0)) // 检测鼠标左键点击
+            {
+                PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+                eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+                List<RaycastResult> results = new List<RaycastResult>();
+                EventSystem.current.RaycastAll(eventDataCurrentPosition, results); // 执行射线投射
+                //存储碰撞结果
+                InterfacePointCache.results = results;
+                foreach (RaycastResult result in results)
+                {
+                    if (result.gameObject.layer == 5) // 检查射线击中的对象是否是ui
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            return false;
         }
 
         private bool interactWithCombat()
@@ -49,8 +73,8 @@ namespace GamePlay.Control
             {
                 HitTarget target = hit.transform.GetComponent<HitTarget>();
                 if (target == null) continue;
-                //点击玩家或者非敌对单位则跳过
-                if (hit.transform.tag == "Player" || hit.transform.tag != "Hostile") continue;
+                //点击非敌对单位则跳过
+                if (hit.transform.tag != "Hostile") continue;
                 Debug.Log("目标已选择。");
                 //调用战斗组件的攻击逻辑方法
                 battle.setAttackTarget(target.gameObject);

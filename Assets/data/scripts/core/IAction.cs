@@ -1,4 +1,4 @@
-namespace GamePlay.Core
+namespace GamePlay.Interface
 {
     public interface IAction{
         void stopAction();

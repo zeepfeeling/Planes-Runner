@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace GamePlay.Core
+namespace GamePlay.Interface
 {
     [CreateAssetMenu(fileName = "Equipment", menuName = "GamePlay/Equipment", order = 3)]
     public class Equipment : Item

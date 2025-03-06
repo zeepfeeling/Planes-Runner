@@ -1,9 +1,9 @@
 using System;
-using GamePlay.Core;
+using GamePlay.Interface;
 using Unity.VisualScripting;
 using UnityEngine;
 
-namespace GamePlay.Core
+namespace GamePlay.Interface
 {
     public class EquipedObject : MonoBehaviour
     {

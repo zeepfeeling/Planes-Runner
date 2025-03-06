@@ -64,15 +64,15 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.51f1c1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\data\scripts\core\Inventory.cs" />
     <Compile Include="Assets\data\scripts\combat\Cast.cs" />
+    <Compile Include="Assets\data\scripts\interface\Inventory.cs" />
     <Compile Include="Assets\data\scripts\combat\Battle.cs" />
     <Compile Include="Assets\data\scripts\nonCombat\Pick.cs" />
     <Compile Include="Assets\data\scripts\nonCombat\PickTarget.cs" />
+    <Compile Include="Assets\data\scripts\caches\InterfacePointCache.cs" />
     <Compile Include="Assets\data\scripts\core\ActionScheduler.cs" />
     <Compile Include="Assets\data\scripts\core\Coin.cs" />
     <Compile Include="Assets\data\scripts\combat\Ammo.cs" />
-    <Compile Include="Assets\data\scripts\core\InventorySlot.cs" />
     <Compile Include="Assets\data\scripts\core\Backpack.cs" />
     <Compile Include="Assets\data\scripts\control\AIControl.cs" />
     <Compile Include="Assets\data\scripts\control\PlayerControl.cs" />
@@ -84,6 +84,7 @@
     <Compile Include="Assets\data\scripts\combat\Effect.cs" />
     <Compile Include="Assets\data\scripts\core\Item.cs" />
     <Compile Include="Assets\data\scripts\combat\Buff.cs" />
+    <Compile Include="Assets\data\scripts\interface\InventorySlot.cs" />
     <Compile Include="Assets\data\scripts\movement\Move.cs" />
     <Compile Include="Assets\data\scripts\control\PatrolPath.cs" />
     <Compile Include="Assets\data\scripts\core\IAction.cs" />

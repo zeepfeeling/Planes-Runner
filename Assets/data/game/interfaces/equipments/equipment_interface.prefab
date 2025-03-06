@@ -1995,7 +1995,7 @@ GameObject:
   - component: {fileID: 4154403915704063454}
   m_Layer: 5
   m_Name: equipment_interface
-  m_TagString: Untagged
+  m_TagString: item_relative_ui
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace GamePlay.Core
+namespace GamePlay.Interface
 {
-    [RequireComponent(typeof(Core.Character))]
+    [RequireComponent(typeof(Interface.Character))]
     public class HitTarget : MonoBehaviour
     {
 

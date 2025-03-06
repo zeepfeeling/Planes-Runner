@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
-using GamePlay.Core;
+using GamePlay.Interface;
 using UnityEngine;
 
-namespace GamePlay.Core
+namespace GamePlay.Interface
 {
 
-    public class Battle : MonoBehaviour, Core.IAction
+    public class Battle : MonoBehaviour, Interface.IAction
     {
         public float attackInterval = 0.1f;
 
@@ -220,9 +220,9 @@ namespace GamePlay.Core
         //设定攻击对象
         public void setAttackTarget(GameObject combatTarget)
         {
-            GetComponent<Core.ActionScheduler>().startAction(this);
+            GetComponent<Interface.ActionScheduler>().startAction(this);
             animator.SetBool("combatState",true);
-            atkTarget = combatTarget.GetComponent<Core.Character>();
+            atkTarget = combatTarget.GetComponent<Interface.Character>();
         }
 
         public void attackStart(){

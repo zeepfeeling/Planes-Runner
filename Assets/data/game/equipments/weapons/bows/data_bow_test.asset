@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: "\u6D4B\u8BD5\u5F13"
   icon: {fileID: 21300000, guid: 03618a5f9113cc349af3faa4257bfde0, type: 3}
+  gnd: {fileID: 5065438663216117719, guid: 4ee6386081201924dab02c251ef9971c, type: 3}
   equipPrefab: {fileID: 6747350202873023215, guid: 5ec8a733756cfd7458b6ac9d3cd1414e,
     type: 3}
   equipmentType: bow

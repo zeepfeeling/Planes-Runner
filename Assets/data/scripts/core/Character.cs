@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using GamePlay.Core;
+using GamePlay.Interface;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace GamePlay.Core
+namespace GamePlay.Interface
 {
 
     public class Character : MonoBehaviour
