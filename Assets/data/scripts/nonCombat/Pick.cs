@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GamePlay.NonCombat
 {
-    public class Pick : MonoBehaviour, Interface.IAction
+    public class Pick : MonoBehaviour, IAction
     {
         PickTarget target;
         Movement.Move move;
@@ -25,15 +25,10 @@ namespace GamePlay.NonCombat
                 move.stopAction();
                 if (!target.isPickable()) return;
                 if(target.item != null){
-                    inventory.addItemsToInventory(target.item,target.singleItemCount);
-                    target.vanish();
+                    if(inventory.addItemsToInventory(target.item,target.singleItemCount))
+                        target.vanish();
                 }
             }
-        }
-
-        private void goEquip()
-        {
-
         }
 
         public void pick(PickTarget pickTarget)

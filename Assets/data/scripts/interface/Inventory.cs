@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -28,32 +29,54 @@ namespace GamePlay.Interface
             }
         }
 
-        public void addItemsToInventory(Item item,int singleItemCount){
+        public bool addItemsToInventory(Item item,int singleItemCount){
             //货币类处理
             if(item.GetType() == typeof(Coin)){
                 coins += singleItemCount;
-                return;
+                return true;
             }
-            InventorySlot inventorySlot = checkValidSlotNum();
+            InventorySlot inventorySlot = getValidSlot(item);
             //当没有可用格子，无法添加
             if(inventorySlot == null){
-                return;
+                return false;
             }
             //将物品设置到格子中
             inventorySlot.updateInventorySlot(item.itemName, item, singleItemCount);
             Debug.Log("拾取了 " + item.itemName + " " + singleItemCount + "个");
+            return true;
         }
 
-        InventorySlot checkValidSlotNum()
+        InventorySlot getValidSlot(Item item)
         {
-            foreach (InventorySlot inventorySlot in inventorySlots)
-            {
-                if (inventorySlot.getItem() == null)
+            //装备类型或者新物品需要分配一个新槽位
+            if(item.GetType() == typeof(Equipment)) {
+                foreach (InventorySlot inventorySlot in inventorySlots)
                 {
-                    return inventorySlot;
+                    if (inventorySlot.getItem() == null)
+                    {
+                        return inventorySlot;
+                    }
                 }
+                return null;
+            } else {
+                foreach (InventorySlot inventorySlot in inventorySlots)
+                {
+                    //同物品堆叠
+                    if (inventorySlot.getItem() != null && inventorySlot.getItem().itemName == item.itemName)
+                    {
+                        return inventorySlot;
+                    }
+                }
+                //新物品分配新槽位
+                foreach (InventorySlot inventorySlot in inventorySlots)
+                {
+                    if (inventorySlot.getItem() == null)
+                    {
+                        return inventorySlot;
+                    }
+                }
+                return null;
             }
-            return null;
         }
     }
 }

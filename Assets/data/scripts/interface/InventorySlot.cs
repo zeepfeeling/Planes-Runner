@@ -95,7 +95,7 @@ namespace GamePlay.Interface
         public void updateInventorySlot(String slotItemName,Item item, int itemCount){
             this.slotItemName = slotItemName;
             this.item = item;
-            this.itemCount = this.itemCount + itemCount;
+            this.itemCount = this.itemCount == 0?itemCount : this.itemCount + itemCount;
             needUpdateSlot = true;
         }
 
