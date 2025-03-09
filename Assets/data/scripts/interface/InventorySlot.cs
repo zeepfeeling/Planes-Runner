@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
+using GamePlay.Core;
 using GamePlay.NonCombat;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace GamePlay.Interface
+namespace GamePlay.Core
 {
-    public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+    public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
     {
         public Sprite defaultSlotIcon;
         String slotItemName;
@@ -32,13 +33,15 @@ namespace GamePlay.Interface
 
         void Update()
         {
-            if(!needUpdateSlot) return;
-            if(item != null && item.icon != null) 
-                slotIcon.sprite = item.icon;
-            else 
-                slotIcon.sprite = defaultSlotIcon;
-            itemCountText.text = itemCount.ToString();
-            needUpdateSlot = false;
+            if (needUpdateSlot)
+            {
+                if (item != null && item.icon != null)
+                    slotIcon.sprite = item.icon;
+                else
+                    slotIcon.sprite = defaultSlotIcon;
+                itemCountText.text = itemCount.ToString();
+                needUpdateSlot = false;
+            }
         }
 
         /* ********************************************处理物品标签拖动逻辑*************************************************** */
@@ -91,6 +94,17 @@ namespace GamePlay.Interface
         }
 
         /* ********************************************处理物品标签拖动逻辑*************************************************** */
+        
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            //左键使用物品逻辑
+            if(eventData.button == PointerEventData.InputButton.Right){
+                //装备逻辑
+                if(item.GetType() == typeof(Weapon)){
+
+                }
+            }
+        }
 
         public void updateInventorySlot(String slotItemName,Item item, int itemCount){
             this.slotItemName = slotItemName;

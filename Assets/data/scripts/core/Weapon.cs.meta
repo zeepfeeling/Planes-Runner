@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a7ce80e5562c733468f44b0b2f579b55
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - icon: {instanceID: 0}
+  - equipPrefab: {instanceID: 0}
+  - equipAnimatorOverrideController: {instanceID: 0}
+  - ammo: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

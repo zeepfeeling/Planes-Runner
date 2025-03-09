@@ -1,13 +1,9 @@
 fileFormatVersion: 2
-guid: a7ce80e5562c733468f44b0b2f579b55
+guid: 1abac5d4cd9b5a04394ab619b177769c
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - icon: {instanceID: 0}
-  - equipPrefab: {instanceID: 0}
-  - equipAnimatorOverrideController: {instanceID: 0}
-  - ammo: {instanceID: 0}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

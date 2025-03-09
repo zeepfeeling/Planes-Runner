@@ -8,7 +8,7 @@ namespace GamePlay.NonCombat
         public bool equipable = true;
         public bool castable = false;
         public bool pickable = true;
-        public Interface.Item item = null;
+        public Core.Item item = null;
         public int singleItemCount = 1;
         public GameObject nameBar = null;
         GameObject nameBarInstance;
@@ -51,7 +51,7 @@ namespace GamePlay.NonCombat
             return pickable;
         }
 
-        public Interface.Item getItem(){
+        public Core.Item getItem(){
             return item;
         }
 

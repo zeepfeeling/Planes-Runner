@@ -1,7 +1,7 @@
 using System;
-using GamePlay.Interface;
+using GamePlay.Core;
 using UnityEngine;
-namespace GamePlay.Interface
+namespace GamePlay.Core
 {
     public class Ammo : MonoBehaviour
     {

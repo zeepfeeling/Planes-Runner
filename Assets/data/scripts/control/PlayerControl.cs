@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using GamePlay.Interface;
+using GamePlay.Core;
 using GamePlay.Movement;
 using GamePlay.NonCombat;
 using UnityEngine;

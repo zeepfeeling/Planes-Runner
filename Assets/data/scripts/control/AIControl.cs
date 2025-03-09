@@ -1,4 +1,4 @@
-using GamePlay.Interface;
+using GamePlay.Core;
 using UnityEngine;
 namespace GamePlay.Control
 {
@@ -12,9 +12,9 @@ namespace GamePlay.Control
         public float wayPointstayTime = 3f;
 
 
-        Interface.Battle battle;
+        Core.Battle battle;
         GameObject player;
-        Interface.Character health;
+        Core.Character health;
         Movement.Move move;
         Vector3 aiPosition;
         float timeAfterEncount = Mathf.Infinity;
@@ -23,8 +23,8 @@ namespace GamePlay.Control
 
         private void Start()
         {
-            health = GetComponent<Interface.Character>();
-            battle = GetComponent<Interface.Battle>();
+            health = GetComponent<Character>();
+            battle = GetComponent<Battle>();
             move = GetComponent<Movement.Move>();
             player = GameObject.FindWithTag("Player");
             aiPosition = transform.position;
@@ -34,7 +34,7 @@ namespace GamePlay.Control
             if (health.isDead()) return;
             if (player == null) return;
             float distance = Vector3.Distance(transform.position, player.transform.position);
-            if (distance <= chaseDistance && !player.GetComponent<Interface.Character>().isDead())
+            if (distance <= chaseDistance && !player.GetComponent<Core.Character>().isDead())
             {
                 //检测进入战斗
                 battle.setAttackTarget(player);
@@ -56,7 +56,8 @@ namespace GamePlay.Control
                     }
                     aiPosition = getCurrentWayPoint();
                 }
-                if(timeAfterPatrol >= wayPointstayTime){
+                if(timeAfterPatrol >= wayPointstayTime)
+                {
                     move.setMoveDestination(aiPosition);
                     timeAfterPatrol = 0;
                 }

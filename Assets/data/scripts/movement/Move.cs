@@ -6,11 +6,11 @@ namespace GamePlay.Movement
     /**
         处理单位移动逻辑
     */
-    public class Move : MonoBehaviour, Interface.IAction
+    public class Move : MonoBehaviour, Core.IAction
     {
 
         NavMeshAgent navMeshAgent;
-        Interface.Character character;
+        Core.Character character;
         Animator animator;
         float speedBase = 5f;
 
@@ -18,7 +18,7 @@ namespace GamePlay.Movement
         {
             animator = GetComponent<Animator>();
             navMeshAgent = GetComponent<NavMeshAgent>();
-            character = GetComponent<Interface.Character>();
+            character = GetComponent<Core.Character>();
         }
 
         // Update is called once per frame
@@ -30,7 +30,7 @@ namespace GamePlay.Movement
 
         public void setMoveDestination(Vector3 destination)
         {
-            GetComponent<Interface.ActionScheduler>().startAction(this);
+            GetComponent<Core.ActionScheduler>().startAction(this);
             navMeshAgent.destination = destination;
             navMeshAgent.isStopped = false;
         }

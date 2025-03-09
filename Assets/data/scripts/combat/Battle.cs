@@ -1,16 +1,16 @@
 using System;
 using System.Collections.Generic;
-using GamePlay.Interface;
+using GamePlay.Core;
 using UnityEngine;
 
-namespace GamePlay.Interface
+namespace GamePlay.Core
 {
 
-    public class Battle : MonoBehaviour, Interface.IAction
+    public class Battle : MonoBehaviour, Core.IAction
     {
         public float attackInterval = 0.1f;
 
-        public Equipment defaultEquipment = null;
+        public Weapon defaultEquipment = null;
         public Transform handTransfrom = null;
         public Transform handTransfromL = null;
         bool handRHasWeapon = false;
@@ -65,15 +65,15 @@ namespace GamePlay.Interface
             }
         }
 
-        public Equipment getEquipmentByName(String name){
+        public Weapon getEquipmentByName(String name){
             return self.getEquipmentBySlot(name);
         }
 
-        public List<Equipment> getEquipmentsActived(){
+        public List<Weapon> getEquipmentsActived(){
             return self.getEquipmentsActived();
         }
 
-        public void equip(Equipment equipment)
+        public void equip(Weapon equipment)
         {
             //标识是否完成装备行为
             bool equiped = false;
@@ -83,7 +83,7 @@ namespace GamePlay.Interface
             String slotName = null;
             //检查装备位是否有空缺
             for(int i = 1; i <= 4; i++){
-                Equipment weapon = self.getEquipmentBySlot("weapon" + i);
+                Weapon weapon = self.getEquipmentBySlot("weapon" + i);
                 //判断槽位是否空手
                 if(weapon == null || weapon.getEquipmentName().Equals(defaultEquipment.getEquipmentName())){
                     //弓类型必须装在左手槽位
@@ -190,9 +190,9 @@ namespace GamePlay.Interface
         }
 
         public void throwAmmo(){
-            List<Equipment> equipmentsActived = self.getEquipmentsActived();
+            List<Weapon> equipmentsActived = self.getEquipmentsActived();
             //处于激活状态的武器检查是否是需要发射
-            foreach(Equipment equipmentActived in equipmentsActived)
+            foreach(Weapon equipmentActived in equipmentsActived)
             {
                 if (!equipmentActived.needAmmo())
                 {
@@ -220,9 +220,9 @@ namespace GamePlay.Interface
         //设定攻击对象
         public void setAttackTarget(GameObject combatTarget)
         {
-            GetComponent<Interface.ActionScheduler>().startAction(this);
+            GetComponent<ActionScheduler>().startAction(this);
             animator.SetBool("combatState",true);
-            atkTarget = combatTarget.GetComponent<Interface.Character>();
+            atkTarget = combatTarget.GetComponent<Core.Character>();
         }
 
         public void attackStart(){

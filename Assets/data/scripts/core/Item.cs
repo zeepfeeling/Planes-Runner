@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace GamePlay.Interface
+namespace GamePlay.Core
 {
     [CreateAssetMenu(fileName = "Item", menuName = "GamePlay/Item", order = 0)]
     public class Item : ScriptableObject

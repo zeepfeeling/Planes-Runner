@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace GamePlay.Interface
+namespace GamePlay.Core
 {
     public class Inventory : MonoBehaviour
     {
@@ -49,7 +49,7 @@ namespace GamePlay.Interface
         InventorySlot getValidSlot(Item item)
         {
             //装备类型或者新物品需要分配一个新槽位
-            if(item.GetType() == typeof(Equipment)) {
+            if(item.GetType() == typeof(Weapon)) {
                 foreach (InventorySlot inventorySlot in inventorySlots)
                 {
                     if (inventorySlot.getItem() == null)

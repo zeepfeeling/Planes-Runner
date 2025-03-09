@@ -1,10 +1,10 @@
 using UnityEngine;
 
-namespace GamePlay.Interface
+namespace GamePlay.Core
 {
     public class ActionScheduler : MonoBehaviour {
 
-        Interface.IAction currentAction;
+        Core.IAction currentAction;
         public void startAction(IAction action){
             if(currentAction == action) return;
             if(currentAction != null){

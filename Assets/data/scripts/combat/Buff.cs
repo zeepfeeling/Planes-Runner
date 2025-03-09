@@ -1,7 +1,7 @@
 using System;
-using GamePlay.Interface;
+using GamePlay.Core;
 using UnityEngine;
-namespace GamePlay.Interface{
+namespace GamePlay.Core{
     
     [CreateAssetMenu(fileName = "Buff", menuName = "GamePlay/Buff", order = 2)]
     public class Buff : ScriptableObject {

@@ -1,9 +1,9 @@
 using System;
-using GamePlay.Interface;
+using GamePlay.Core;
 using TMPro;
 using UnityEngine;
 
-namespace GamePlay.Interface
+namespace GamePlay.Core
 {
 
     public class Cast : MonoBehaviour, IAction

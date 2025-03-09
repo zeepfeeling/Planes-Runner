@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using GamePlay.Interface;
+using GamePlay.Core;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace GamePlay.Interface
+namespace GamePlay.Core
 {
 
     public class Character : MonoBehaviour
@@ -25,7 +25,7 @@ namespace GamePlay.Interface
         bool staggerStatus;//是否处于眩晕状态
         float staggersRecoverRate = 0.001f;//眩晕值恢复速率
         bool dead;
-        public Dictionary<String,Equipment> equipments = new Dictionary<string, Equipment>(); //装备目录
+        public Dictionary<String,Weapon> equipments = new Dictionary<string, Weapon>(); //装备目录
         Dictionary<String,float> equipValues = new Dictionary<string, float>(); //装备数值目录
         String[] activeSlots = new String[2]; //被激活的装备槽位
         List<String> frozenSlots = new List<string>(); //被冻结的装备槽位
@@ -203,7 +203,7 @@ namespace GamePlay.Interface
             manaPoint = Mathf.Max(manaPoint - cost, 0);
         }
 
-        public Dictionary<String,Equipment> getCurrentEquipments(){
+        public Dictionary<String,Weapon> getCurrentEquipments(){
             return equipments;
         }
 
@@ -211,7 +211,7 @@ namespace GamePlay.Interface
             return equipValues;
         }
 
-        public Equipment getEquipmentBySlot(String slot){
+        public Weapon getEquipmentBySlot(String slot){
             return equipments[slot];
         }
 
@@ -219,16 +219,16 @@ namespace GamePlay.Interface
             return equipValues[slot];
         }
 
-        public void setEquipmentBySlot(String slot,Equipment equipment){
+        public void setEquipmentBySlot(String slot,Weapon equipment){
             equipments[slot] = equipment;
             activeEquipment(slot);
         }
 
-        public List<Equipment> getEquipmentsActived(){
-            List<Equipment> activeEquipments = new List<Equipment>();
+        public List<Weapon> getEquipmentsActived(){
+            List<Weapon> activeEquipments = new List<Weapon>();
             foreach(String slot in activeSlots){
                 if(slot == null) continue;
-                Equipment activeEquipment = equipments[slot];
+                Weapon activeEquipment = equipments[slot];
                 if(activeEquipment != null)
                     activeEquipments.Add(activeEquipment);
             }
@@ -275,8 +275,8 @@ namespace GamePlay.Interface
 
         //计算人物最大和最小交战距离
         private void countBattleRange(){
-            List<Equipment> equipmentsActived = getEquipmentsActived();
-            foreach(Equipment equipmentActived in equipmentsActived)
+            List<Weapon> equipmentsActived = getEquipmentsActived();
+            foreach(Weapon equipmentActived in equipmentsActived)
             {   
                     maxBattleRnage = Mathf.Max(equipmentActived.getRange(),maxBattleRnage);
                     minBattleRnage = Mathf.Min(equipmentActived.getRange(),minBattleRnage);

@@ -79,6 +79,7 @@
     <Compile Include="Assets\data\scripts\core\Equipment.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\data\scripts\core\Character.cs" />
+    <Compile Include="Assets\data\scripts\core\Weapon.cs" />
     <Compile Include="Assets\data\scripts\interface\PointBar.cs" />
     <Compile Include="Assets\data\scripts\combat\HitTarget.cs" />
     <Compile Include="Assets\data\scripts\combat\Effect.cs" />

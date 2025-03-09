@@ -1,4 +1,4 @@
-using GamePlay.Interface;
+using GamePlay.Core;
 using UnityEngine;
 
 namespace GamePlay.NonCombat
@@ -33,7 +33,7 @@ namespace GamePlay.NonCombat
 
         public void pick(PickTarget pickTarget)
         {
-            GetComponent<Interface.ActionScheduler>().startAction(this);
+            GetComponent<ActionScheduler>().startAction(this);
             target = pickTarget;          
         }
         public void stopAction()
