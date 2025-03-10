@@ -40,9 +40,6 @@ namespace GamePlay.Core
             if(hitEffect != null){
                 Instantiate(hitEffect,transform.position,Quaternion.identity);
             }
-            if(!target.isDead()){
-                target.addBuffs(buffs);
-            }
             Destroy(gameObject);
         }
     }

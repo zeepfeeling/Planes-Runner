@@ -39,10 +39,6 @@ namespace GamePlay.Core
                 ammoInstance.setDamage(ammoDamage);
                 ammoInstance.shoot(direction + new Vector3(0, 1f, 0));
             }
-            // 法术存在目标状态
-            if (targetBuffs != null && castTarget != null) castTarget.addBuffs(targetBuffs);
-            // 法术存在自身状态
-            if (selfBuffs != null) casterAttributes.addBuffs(selfBuffs);
         }
 
         public String getName()

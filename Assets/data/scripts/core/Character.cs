@@ -25,17 +25,13 @@ namespace GamePlay.Core
         bool staggerStatus;//是否处于眩晕状态
         float staggersRecoverRate = 0.001f;//眩晕值恢复速率
         bool dead;
-        public Dictionary<String,Weapon> equipments = new Dictionary<string, Weapon>(); //装备目录
-        Dictionary<String,float> equipValues = new Dictionary<string, float>(); //装备数值目录
-        String[] activeSlots = new String[2]; //被激活的装备槽位
-        List<String> frozenSlots = new List<string>(); //被冻结的装备槽位
+
         float maxBattleRnage = 0f; //最大交战距离
         float minBattleRnage = 0f; //最小交战距离
 
         void Awake()
         {
-            //初始化装备目录信息
-            initiateEquipSlots();
+
         }
         void Start()
         {
@@ -60,13 +56,6 @@ namespace GamePlay.Core
             }
         }
 
-        private void initiateEquipSlots()
-        {
-            equipments.Add("weapon1", null);
-            equipments.Add("weapon2", null);
-            equipments.Add("weapon3", null);
-            equipments.Add("weapon4", null);
-        }
 
         void Update()
         {
@@ -83,36 +72,10 @@ namespace GamePlay.Core
                 staggerSlider.value = staggersPoint;
             }
             //恢复眩晕值
-            staggersPoint = Mathf.Max(staggersPoint - staggersRecoverRate,0);
+            staggersPoint = Mathf.Max(staggersPoint - staggersRecoverRate, 0);
             if (buffs == null || buffs.Count() == 0)
             {
                 return;
-            }
-            dealWithBuffs();
-        }
-
-        private void dealWithBuffs()
-        {
-            List<Buff> deleteBuffs = new List<Buff>();
-            foreach (Buff buff in buffs)
-            {
-                Debug.Log(buff.getBuffName());
-                Debug.Log("buff last " + buff.getCurrentTime());
-                if (buff.getCurrentTime() < buff.getDuration())
-                {
-                    buff.buffact(this);
-                    buff.buffTimeForward();
-                }
-                else
-                {
-                    deleteBuffs.Add(buff);
-                }
-            }
-            //delete timeout buffs
-            foreach (Buff buff in deleteBuffs)
-            {
-                buffs.Remove(buff);
-                buffNames.Remove(buff.getBuffName());
             }
         }
 
@@ -160,20 +123,9 @@ namespace GamePlay.Core
             this.maxManaPoint = maxManaPoint;
         }
 
-        public bool inStaggerStatus(){
-            return staggerStatus;
-        }
-
-        //add new and refresh buffs
-        public void addBuffs(Buff[] buffs)
+        public bool inStaggerStatus()
         {
-            foreach(Buff buff in buffs){
-                if(buffNames.Contains(buff.getBuffName())){
-                    return;
-                }
-                this.buffs.Add(buff.buffInstance());
-                buffNames.Add(buff.getBuffName());
-            }
+            return staggerStatus;
         }
 
         public void takeDamage(float damage)
@@ -186,14 +138,16 @@ namespace GamePlay.Core
                 return;
             }
             staggersPoint += 1f;
-            if(staggersPoint >= maxStaggersPoint && GetComponent<Animator>() != null){
-                GetComponent<Animator>().SetBool("getHit",true);
+            if (staggersPoint >= maxStaggersPoint && GetComponent<Animator>() != null)
+            {
+                GetComponent<Animator>().SetBool("getHit", true);
                 staggerStatus = true;
             }
         }
 
-        public void resetStaggers(){
-            GetComponent<Animator>().SetBool("getHit",false);
+        public void resetStaggers()
+        {
+            GetComponent<Animator>().SetBool("getHit", false);
             staggerStatus = false;
             staggersPoint = 0;
         }
@@ -203,84 +157,23 @@ namespace GamePlay.Core
             manaPoint = Mathf.Max(manaPoint - cost, 0);
         }
 
-        public Dictionary<String,Weapon> getCurrentEquipments(){
-            return equipments;
-        }
 
-        public Dictionary<String,float> getEquipValues(){
-            return equipValues;
-        }
-
-        public Weapon getEquipmentBySlot(String slot){
-            return equipments[slot];
-        }
-
-        public float getEquipValueBySlot(String slot){
-            return equipValues[slot];
-        }
-
-        public void setEquipmentBySlot(String slot,Weapon equipment){
-            equipments[slot] = equipment;
-            activeEquipment(slot);
-        }
-
-        public List<Weapon> getEquipmentsActived(){
-            List<Weapon> activeEquipments = new List<Weapon>();
-            foreach(String slot in activeSlots){
-                if(slot == null) continue;
-                Weapon activeEquipment = equipments[slot];
-                if(activeEquipment != null)
-                    activeEquipments.Add(activeEquipment);
-            }
-            return activeEquipments;
-        }
-
-        public String[] getActiveSlots(){
-            return activeSlots;
-        }
-
-        public void removeEquipment(String slot){
-            equipments[slot] = null;
-            inActiveEquipment(slot);
-        }
-
-        public float getMaxBattleRange(){
+        public float getMaxBattleRange()
+        {
             return maxBattleRnage;
         }
-        public float getMinBattleRange(){
+        public float getMinBattleRange()
+        {
             return minBattleRnage;
         }
 
-        private void activeEquipment(String slot){
-            if(slot.Equals("weapon1") || slot.Equals("weapon3"))
-                activeSlots[0] = slot;
-            else if(slot.Equals("weapon2") || slot.Equals("weapon4"))
-                activeSlots[1] = slot;
-            //重新计算人物最大和最小交战距离
-            countBattleRange();
-        }
-
-        private void inActiveEquipment(String slot){
-            if(slot.Equals(activeSlots[0])) activeSlots[0] = null;
-            if(slot.Equals(activeSlots[1])) activeSlots[1] = null;
-        }
 
         private void die()
         {
             if (dead) return;
             dead = true;
-            GetComponent<Animator>().SetBool("die",true);
+            GetComponent<Animator>().SetBool("die", true);
             GetComponent<ActionScheduler>().stopCurrentAction();
-        }
-
-        //计算人物最大和最小交战距离
-        private void countBattleRange(){
-            List<Weapon> equipmentsActived = getEquipmentsActived();
-            foreach(Weapon equipmentActived in equipmentsActived)
-            {   
-                    maxBattleRnage = Mathf.Max(equipmentActived.getRange(),maxBattleRnage);
-                    minBattleRnage = Mathf.Min(equipmentActived.getRange(),minBattleRnage);
-            }
         }
     }
 }

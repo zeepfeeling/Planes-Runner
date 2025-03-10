@@ -34,11 +34,6 @@ namespace GamePlay.Core
             self = GetComponent<Character>();
             move = GetComponent<Movement.Move>();
             animator = GetComponent<Animator>();
-            //所有装备槽装备空拳
-            equip(defaultEquipment);
-            equip(defaultEquipment);
-            equip(defaultEquipment);
-            equip(defaultEquipment);
         }
 
         void Update()
@@ -65,61 +60,6 @@ namespace GamePlay.Core
             }
         }
 
-        public Weapon getEquipmentByName(String name){
-            return self.getEquipmentBySlot(name);
-        }
-
-        public List<Weapon> getEquipmentsActived(){
-            return self.getEquipmentsActived();
-        }
-
-        public void equip(Weapon equipment)
-        {
-            //标识是否完成装备行为
-            bool equiped = false;
-            //获取装备类型
-            String weaponType = equipment.getEquipmentType();
-            //存储装备到的槽位
-            String slotName = null;
-            //检查装备位是否有空缺
-            for(int i = 1; i <= 4; i++){
-                Weapon weapon = self.getEquipmentBySlot("weapon" + i);
-                //判断槽位是否空手
-                if(weapon == null || weapon.getEquipmentName().Equals(defaultEquipment.getEquipmentName())){
-                    //弓类型必须装在左手槽位
-                    if(weaponType == "bow" && i != 2 && i !=4){
-                        continue;
-                    }
-                    self.setEquipmentBySlot("weapon" + i, equipment);
-                    slotName = "weapon" + i;
-                    equiped = true;
-                    break;
-                }
-            }
-            //没有空缺的情况下替换第一个装备
-            if(!equiped){
-                if(weaponType == "bow") self.setEquipmentBySlot("weapon2", equipment);
-                else self.setEquipmentBySlot("weapon1", equipment);
-            } 
-            //根据激活槽位选择装备模型生成位置
-            if(slotName.Equals("weapon1") || slotName.Equals("weapon3")){
-                //判断是否不是空拳,空拳状态不标记为有装备
-                if(!equipment.getEquipmentName().Equals(defaultEquipment.getEquipmentName())){
-                    handRHasWeapon = true;
-                    weaponRType = weaponType;
-                }
-                equipment.equipWeaponShowOnPosition(handTransfrom, animator);
-            }
-            else if (slotName.Equals("weapon2") || slotName.Equals("weapon4")){
-                //判断是否不是空拳,空拳状态不标记为有装备
-                if(!equipment.getEquipmentName().Equals(defaultEquipment.getEquipmentName())){
-                    handLHasWeapon = true;
-                    weaponLType = weaponType;
-                }
-                equipment.equipWeaponShowOnPosition(handTransfromL, animator);
-            }
-            getEquipObj();
-        }
 
         //处理攻击动画逻辑
         private void attackBehaviour()
@@ -189,23 +129,23 @@ namespace GamePlay.Core
             return handTransfrom.position;
         }
 
-        public void throwAmmo(){
-            List<Weapon> equipmentsActived = self.getEquipmentsActived();
-            //处于激活状态的武器检查是否是需要发射
-            foreach(Weapon equipmentActived in equipmentsActived)
-            {
-                if (!equipmentActived.needAmmo())
-                {
-                    continue;
-                }
-                Ammo ammo = equipmentActived.GetAmmo();
-                if (ammo == null) return;
-                //send value of damage and let ammo shoot
-                Ammo ammoInstance = Instantiate(ammo, getShootPosition(), Quaternion.identity);
-                ammoInstance.setDamage(equipmentActived.getPhysicDamage());
-                ammoInstance.shoot(atkTarget.transform.position + new Vector3(0, 1f, 0));
-            }
-        }
+        // public void throwAmmo(){
+        //     List<Weapon> equipmentsActived = self.getEquipmentsActived();
+        //     //处于激活状态的武器检查是否是需要发射
+        //     foreach(Weapon equipmentActived in equipmentsActived)
+        //     {
+        //         if (!equipmentActived.needAmmo())
+        //         {
+        //             continue;
+        //         }
+        //         Ammo ammo = equipmentActived.GetAmmo();
+        //         if (ammo == null) return;
+        //         //send value of damage and let ammo shoot
+        //         Ammo ammoInstance = Instantiate(ammo, getShootPosition(), Quaternion.identity);
+        //         ammoInstance.setDamage(equipmentActived.getPhysicDamage());
+        //         ammoInstance.shoot(atkTarget.transform.position + new Vector3(0, 1f, 0));
+        //     }
+        // }
 
         private bool inRange(bool needMaxRange)
         {
